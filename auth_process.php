@@ -66,6 +66,27 @@
 
         }
 
-    } else if($type === "login")
+    } else if($type === "login"){
+
+        $email = filter_input(INPUT_POST, "email");
+        $password = filter_input(INPUT_POST, "password");
+
+        // Try auth user
+        if($userDao->authenticateUser($email, $password)){
+
+            $message->setMessage("Welcome back!","success", "editprofile.php");
+
+        // Redirect user if authentication fails 
+        } else {
+
+            $message->setMessage("Invalid email or password", "error", "back");
+
+        }
+
+    } else {
+
+        $message->setMessage("Invalid credentials!", "error", "index.php");
+
+    }
 
 ?>

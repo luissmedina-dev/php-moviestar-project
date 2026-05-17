@@ -1,12 +1,13 @@
 <?php
-    require_once("templates/header.php")
+    require_once("templates/header.php");
+    require_once("globals.php");
 ?>
 <div id="main-container" class="container-fluid">
     <div class="col-md-12">
         <div class="row" id="auth-row">
             <div class="col-md-4" id="login-container">
                 <h2>Sign In</h2>
-                <form action="" method="post">
+                <form action="<?= $BASE_URL ?>auth_process.php" method="post">
                     <input type="hidden" name="type" value="login">
                     <div class="form-group">
                         <label for="email">E-mail:</label>
