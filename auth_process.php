@@ -31,7 +31,21 @@
                 // Verify if email is already registered
                 if($userDao->findByEmail($email) === false) {
 
-                    echo "No users were fond!";
+                    $user = new User ();
+
+                    // Create token and password
+                    $usertoken = $user->generateToken();
+                    $finalPassoword = $user->generatePassoword($password);
+
+                    $user->name = $name;
+                    $user->lastname = $lastname;
+                    $user->email = $email;
+                    $user->password = $finalPassoword;
+                    $user->token = $usertoken;
+
+                    $auth = true;
+
+                    $userDao->create($user, $auth);
 
                 }else {
                     // User already exists error message
