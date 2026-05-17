@@ -2,6 +2,7 @@
     require_once("globals.php");
     require_once("db.php");
     require_once("models/Message.php");
+    require_once("dao/userDAO.php");
 
     $message = new Message($BASE_URL);
 
@@ -9,9 +10,12 @@
 
     if(!empty($flassMensage["msg"])){
         // Clear message
-        $message->clearMessage();
+        $message->clearMessage(false);
     }
 
+    $userDao = new userDAO($conn, $BASE_URL);
+
+    $userData = $userDao->verifyToken();
 
 ?>
 <!DOCTYPE html>
@@ -45,9 +49,28 @@
             </form>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Sign In / Sign Up</a>
-                    </li>
+                    <?php if($userData): ?> 
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>newmovie.php" class="nav-link">
+                                <i class="far fa-plus-square"></i> Include movie
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>dashboard.php" class="nav-link">My movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>editprofile.php" class="nav-link bold">
+                                <?= $userData->name ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>logout.php" class="nav-link">Logout</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a href="<?= $BASE_URL ?>auth.php" class="nav-link">Sign In / Sign Up</a>
+                        </li> 
+                    <?php endif; ?>
                 </ul>
             </div>
         </nav>

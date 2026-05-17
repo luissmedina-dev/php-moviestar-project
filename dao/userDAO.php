@@ -1,9 +1,9 @@
 <?php 
 
-    require_once("models/user.php");
+    require_once("models/User.php");
     require_once("models/Message.php");
 
-    class userDAO implements UserDAOInterface {
+    class UserDAO implements UserDAOInterface {
 
         private $conn;
         private $url;
@@ -48,7 +48,7 @@
 
             $stmt->execute();
 
-            // Authenticate user, if auth true
+            // Authenticate user if $authUser is true
             if($authUser){
                 $this->setTokenToSession($user->token);
             }
@@ -59,16 +59,39 @@
         }
         public function verifyToken($protected = false){
 
+            if(!empty($_SESSION["token"])){
+
+                // Get token from session
+                $token = $_SESSION["token"];
+
+                $user = $this->findByToken($token);
+
+                if($user){
+                    return $user;
+                } else if($protected) {
+
+                    // Redirect user if not authenticated
+                    $this->message->setMessage("Please sign in to access this page!", "error", "index.php");
+
+                }
+
+        } else if($protected) {
+
+                // Redirect user if not authenticated
+                $this->message->setMessage("Please sign in to access this page!", "error", "index.php");
+
+            }
+            
         }
         public function setTokenToSession($token, $redirect = true){
 
-            // Save token in session
+            // Store token in session
             $_SESSION["token"] = $token;
 
             if ($redirect) {
                 
-                // Redirect for user profile
-                $this->message->setMessage("Welcome!","success", "editprofile.php");
+                // Redirect to user profile
+                $this->message->setMessage("Welcome back!","success", "editprofile.php");
 
             }
 
@@ -106,8 +129,39 @@
 
         }
         public function findByToken($token){
+            if($token != ""){
 
+                $stmt = $this->conn->prepare("SELECT * FROM users WHERE token = :token");
+
+                $stmt->bindParam(":token", $token);
+
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0){
+
+                    $data = $stmt->fetch();
+                    $user = $this->buildUser($data);
+
+                    return $user;
+
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
         }
+
+        public function destroyToken(){
+            
+            // Remove token from session
+            $_SESSION["token"] = "";
+
+            // Redirect and display success message
+            $this->message->setMessage("Logged out successfully!", "success", "index.php");
+        }
+
         public function changePassword(User $user){
 
         }
