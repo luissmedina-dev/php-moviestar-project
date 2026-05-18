@@ -73,6 +73,30 @@
     // Update password
     } elseif ($type === "changepassword"){
 
+        // Recive post data
+        $password = filter_input(INPUT_POST, "password");
+        $confirmpassword = filter_input(INPUT_POST, "confirmpassword");
+
+        // Rescue user data
+        $userData = $userDao->verifyToken();
+        $id = $userData->id;
+
+        if ($password == $confirmpassword){
+
+            // Create new user object
+            $user = new User();
+
+            $finalPassoword = $user->generatePassoword($password);
+
+            $user->password = $finalPassoword;
+            $user->id = $id;
+
+            $userDao->changePassword($user);
+
+        } else {
+            $message->setMessage("Password are not equal!", "error", "back");
+        }
+
     } else {
         $message->setMessage("Invalid credentials!", "error", "index.php");
     }
