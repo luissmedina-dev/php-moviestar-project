@@ -34,6 +34,40 @@
         $userData->email = $email;
         $userData->bio = $bio;
 
+        // Upload image
+        if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])){
+            
+            $image = $_FILES["image"];
+            $imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+            $jpgArray = ["image/jpeg", "image/jpg"];
+
+            // Image type verefication
+            if(in_array($image["type"], $imageTypes)){
+
+                //Check jpg
+                if(in_array($image, $jpgArray)){
+
+                    $imageFile = imagecreatefromjpeg($image["tmp_name"]);
+
+                // Png image
+                } else {
+
+                    $imageFile = imagecreatefrompng($image["tmp_name"]);
+
+                }
+
+                $imageName = $user->imageGenerateName();
+
+                imagejpeg($imageFile, "./img/users/". $imageName, 100);
+
+                $userData->image = $imageName;
+
+            } else {
+                $message->setMessage("Invalid image type", "error", "back");
+            }
+
+        }
+
         $userDao->update($userData);
         
     // Update password
