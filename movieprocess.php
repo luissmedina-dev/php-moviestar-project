@@ -42,7 +42,7 @@
             if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])){
 
                 $image = $_FILES["image"];
-                $imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+                $imageTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
                 $jpgArray = ["image/jpeg", "image/jpg"];
 
                 // Check image type
@@ -51,7 +51,10 @@
                     // Check image jpg type
                     if(in_array($image["type"], $jpgArray)){
                         $imageFile = imagecreatefromjpeg($image["tmp_name"]);
-                    } else {
+                    } elseif($image["type"] == "image/webp"){
+                        $imageFile = imagecreatefromwebp($image["tmp_name"]);
+                    }
+                    else {
                         $imageFile = imagecreatefrompng($image["tmp_name"]);
                     }
                     
@@ -66,7 +69,7 @@
                     $message->setMessage("Invalid image type", "error", "back");
                 }
             }
-
+ 
             $movieDAO->create($movie);
 
         } else {

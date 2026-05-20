@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label for="runtime">Runtime:</label>
-                <input type="text" class="form-control-file" name="runtime" id="runtime" placeholder="Enter the movie runtime">
+                <input type="text" class="form-control-file" name="length" id="length" placeholder="Enter the movie runtime">
             </div>
             <div class="form-group">
                 <label for="category">Category:</label>
@@ -53,7 +53,7 @@
             </div>
             <div class="form-group">
                 <label for="descriptiom">Description:</label>
-                <textarea name="description" id="description" rows="5" class="form-control" placehoder="Descript the movie..."></textarea>
+                <textarea name="description" id="description" rows="5" class="form-control" placeholder="Descript the movie..."></textarea>
             </div>
             <input type="submit" class="btn card-btn" value="Add movie">
         </form>
