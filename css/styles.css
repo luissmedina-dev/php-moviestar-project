@@ -233,7 +233,8 @@
     margin-top: 30px;
 }
 
-.edit-profile-page .card-btn{
+.edit-profile-page .card-btn,
+#add-movie-container .card-btn{
     width: auto;
 }
 
@@ -260,6 +261,94 @@
     display: block;
     margin: 0 auto;
     padding-top: 7px;
+}
+
+/* Dashboard */
+#add-movie-container {
+    text-align: right;
+}
+
+#movies-dashboard .table{
+    color: #FFF;
+}
+
+#movies-dashboard .table th {
+    border-top: none;
+}
+
+#movies-dashboard .table td {
+    padding: 15px 0;
+}
+
+.table {
+    color: #FFF;
+}
+
+.table td,
+.table th {
+    background-color: #000 !important;
+    color: #FFF;
+    border-color: #333;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table thead tr {
+    border-bottom: 2px solid #FFF;
+    border-top: none;
+}
+
+.table-movie-title {
+    color: #FFF;
+    font-weight: bold;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+.table-movie-title:hover {
+    color: #F5C518;
+}
+
+.actions-column {
+    max-width: 75px;
+    text-align: center;
+}
+
+.actions-column form {
+    display: inline-block;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: bold;
+    transition: 0.5s;
+    border: none;
+}
+
+.edit-btn{
+    background-color: #0DCAF0;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.edit-btn:hover{
+    background-color: transparent;
+    color: #0DCAF0;
+    text-decoration: none;
+}
+
+.delete-btn{
+    background-color: #DC3545;
+    color: #FFF;
+}
+
+.delete-btn:hover{
+    background-color: transparent;
+    color: #DC3545;
+    text-decoration: none;
 }
 
 /* FOOTER */
