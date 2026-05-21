@@ -1,5 +1,4 @@
 <?php 
-
     require_once("globals.php");
     require_once("db.php");
     require_once("models/User.php");
@@ -45,7 +44,7 @@
             if(in_array($image["type"], $imageTypes)){
 
                 //Check jpg
-                if(in_array($image, $jpgArray)){
+                if(in_array($image["type"], $jpgArray)){
 
                     $imageFile = imagecreatefromjpeg($image["tmp_name"]);
 
