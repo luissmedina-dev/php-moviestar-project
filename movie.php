@@ -46,6 +46,7 @@
     }
 
     // Rescue movie reviews
+    $alreadyReviewed = false;
 
 ?>
 
@@ -69,6 +70,7 @@
         <div class="offset-md-1 col-md-10" id="reviews-container">
             <h3 id="reviews-title">Reviews</h3>
             <!-- Check if the user can submit reviews -->
+             <?php if(!empty($userData) && !$userOwnsMovie && !$alreadyReviewed): ?>
              <div class="col-md-12" id="review-form-container">
                 <h4>Submit your review:</h4>
                 <p class="page-description">Fill out the form with rating and review</p>
@@ -98,6 +100,7 @@
                     <input type="submit" class="btn card-btn" value="Submit Review">
                 </form>
              </div>
+             <?php endif; ?>
              <!--- Reviews -->
              <div class="col-md-12 review">
                 <div class="row">

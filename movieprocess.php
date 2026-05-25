@@ -76,6 +76,32 @@
             $message->setMessage("Please fill in all required fields: title, description, and category.", "error", "back");
         }
 
-    } else {
+    
+    } else if ($type === "delete") {
+
+        // Recive form data
+        $id = filter_input(INPUT_POST, "id");
+
+        $movie = $movieDAO->findById($id);
+
+        if($movie){
+
+            // Check if the movie belongs to the user
+            if ($movie->user_id === $userData->id) {
+
+                $movieDAO->destroy($movie->id);
+
+            } else {
+                $message->setMessage("Invalid data provided!", "error", "index.php");
+            }
+
+        } else {
+            $message->setMessage("Invalid data provided!", "error", "index.php");
+        }
+
+    }
+    
+    else {
+
         $message->setMessage("Invalid data provided!", "error", "index.php");
     }
