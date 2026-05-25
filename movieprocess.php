@@ -99,9 +99,83 @@
             $message->setMessage("Invalid data provided!", "error", "index.php");
         }
 
-    }
-    
-    else {
+    } elseif($type === "update") {
+
+        // Recive inputs data
+        $title = filter_input(INPUT_POST, "title");
+        $description = filter_input(INPUT_POST, "description");
+        $trailer = filter_input(INPUT_POST, "trailer");
+        $category = filter_input(INPUT_POST, "category");
+        $length = filter_input(INPUT_POST, "length");
+        $id = filter_input(INPUT_POST, "id");
+
+        $movieData = $movieDAO->findById($id);
+
+        // Verify if found movie
+        if($movieData){
+
+            if ($movieData->user_id === $userData->id) {
+
+                // Data verification 
+                if(!empty($title) && !empty($description) && !empty($category)) {
+
+                    // Edit movie
+                    $movieData->title = $title;
+                    $movieData->description = $description;
+                    $movieData->trailer = $trailer;
+                    $movieData->category = $category;
+                    $movieData->length = $length;
+
+                    // Movie image upload
+                    if(isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])){
+
+                    $image = $_FILES["image"];
+                    $imageTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+                    $jpgArray = ["image/jpeg", "image/jpg"];
+
+                    // Check image type
+                    if(in_array($image["type"], $imageTypes)){
+
+                        // Check image jpg type
+                        if(in_array($image["type"], $jpgArray)){
+                            $imageFile = imagecreatefromjpeg($image["tmp_name"]);
+                        } elseif($image["type"] == "image/webp"){
+                            $imageFile = imagecreatefromwebp($image["tmp_name"]);
+                        }
+                        else {
+                            $imageFile = imagecreatefrompng($image["tmp_name"]);
+                        }
+                        
+                        // Generate image name
+                        $movie = new Movie();
+
+                        $imageName = $movie->imageGenerateName();
+
+                        imagejpeg($imageFile, "./img/movies/" . $imageName, 100);
+
+                        $movie->image = $imageName;
+
+                    } else {
+                        $message->setMessage("Invalid image type", "error", "back");
+                    }
+                }
+
+                $movieDAO->update($movieData);
+
+                } else {
+                    $message->setMessage("Please fill in all required fields: title, description, and category.", "error", "back"); 
+                }
+                
+            } else {
+                $message->setMessage("Invalid data provided!", "error", "index.php");
+            }
+
+        } else {
+            $message->setMessage("Invalid data provided!", "error", "index.php");
+        }
+
+
+    } else {
 
         $message->setMessage("Invalid data provided!", "error", "index.php");
     }

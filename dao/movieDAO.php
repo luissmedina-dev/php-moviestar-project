@@ -152,6 +152,29 @@
     }
     public function update(Movie $movie){
 
+        $stmt = $this->conn->prepare("UPDATE movies SET
+            title = :title,
+            description = :description,
+            image = :image,
+            category = :category,
+            trailer = :trailer,
+            length = :length
+            WHERE id = :id
+        ");
+
+        $stmt->bindParam(":title", $movie->title);
+        $stmt->bindParam(":description", $movie->description);
+        $stmt->bindParam(":image", $movie->image);
+        $stmt->bindParam(":category", $movie->category);
+        $stmt->bindParam(":trailer", $movie->trailer);
+        $stmt->bindParam(":length", $movie->length);
+        $stmt->bindParam(":id", $movie->id);
+
+        $stmt->execute();
+
+        // Edit movie success message 
+        $this->message->setMessage("Movie updated successfully","success", "dashboard.php");
+
     }
     public function destroy($id){
 
@@ -161,7 +184,7 @@
 
         $stmt->execute();
 
-        // Add movie success message 
+        // Delete movie success message 
         $this->message->setMessage("Movie delete successfully","success", "dashboard.php");
 
     }
