@@ -13,9 +13,9 @@
         $message->clearMessage(false);
     }
 
-    $userDao = new userDAO($conn, $BASE_URL);
+    $userDAO = new userDAO($conn, $BASE_URL);
 
-    $userData = $userDao->verifyToken();
+    $userData = $userDAO->verifyToken();
 
 ?>
 <!DOCTYPE html>

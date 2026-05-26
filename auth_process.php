@@ -8,7 +8,7 @@
 
     $message = new Message($BASE_URL);
 
-    $userDao = new userDAO($conn, $BASE_URL);
+    $userDAO = new userDAO($conn, $BASE_URL);
 
     // Rescue the form type
     $type = filter_input(INPUT_POST, "type");
@@ -29,7 +29,7 @@
             if($password === $confirmpassword){
 
                 // Verify if email is already registered
-                if($userDao->findByEmail($email) === false) {
+                if($userDAO->findByEmail($email) === false) {
 
                     $user = new User ();
 
@@ -45,7 +45,7 @@
 
                     $auth = true;
 
-                    $userDao->create($user, $auth);
+                    $userDAO->create($user, $auth);
 
                 }else {
                     // User already exists error message
@@ -72,7 +72,7 @@
         $password = filter_input(INPUT_POST, "password");
 
         // Try auth user
-        if($userDao->authenticateUser($email, $password)){
+        if($userDAO->authenticateUser($email, $password)){
 
             $message->setMessage("Welcome back!","success", "editprofile.php");
 

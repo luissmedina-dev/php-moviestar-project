@@ -7,7 +7,7 @@
 
     $message = new Message($BASE_URL);
 
-    $userDao = new userDAO($conn, $BASE_URL);
+    $userDAO = new userDAO($conn, $BASE_URL);
 
     // Rescue the form type
     $type = filter_input(INPUT_POST, "type");
@@ -16,7 +16,7 @@
     if ($type === "update"){
 
         // Rescue user data
-        $userData = $userDao->verifyToken();
+        $userData = $userDAO->verifyToken();
 
         // Recive post data
         $name = filter_input(INPUT_POST, "name");
@@ -67,7 +67,7 @@
 
         }
 
-        $userDao->update($userData);
+        $userDAO->update($userData);
         
     // Update password
     } elseif ($type === "changepassword"){
@@ -77,7 +77,7 @@
         $confirmpassword = filter_input(INPUT_POST, "confirmpassword");
 
         // Rescue user data
-        $userData = $userDao->verifyToken();
+        $userData = $userDAO->verifyToken();
         $id = $userData->id;
 
         if ($password == $confirmpassword){
@@ -90,7 +90,7 @@
             $user->password = $finalPassoword;
             $user->id = $id;
 
-            $userDao->changePassword($user);
+            $userDAO->changePassword($user);
 
         } else {
             $message->setMessage("Password are not equal!", "error", "back");

@@ -53,8 +53,7 @@
                         $imageFile = imagecreatefromjpeg($image["tmp_name"]);
                     } elseif($image["type"] == "image/webp"){
                         $imageFile = imagecreatefromwebp($image["tmp_name"]);
-                    }
-                    else {
+                    } else {
                         $imageFile = imagecreatefrompng($image["tmp_name"]);
                     }
                     

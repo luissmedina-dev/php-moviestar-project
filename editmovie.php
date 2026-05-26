@@ -8,9 +8,9 @@
     require_once("dao/movieDAO.php");
 
     $user = new User();
-    $userDao = new UserDAO($conn, $BASE_URL);
+    $userDAO = new UserDAO($conn, $BASE_URL);
 
-    $userData = $userDao->verifyToken(true);
+    $userData = $userDAO->verifyToken(true);
 
     $movieDAO = new MovieDAO($conn, $BASE_URL);
 

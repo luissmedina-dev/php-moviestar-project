@@ -5,9 +5,9 @@
     require_once("models/User.php");
 
     $user = new User();
-    $userDao = new UserDAO($conn, $BASE_URL);
+    $userDAO = new UserDAO($conn, $BASE_URL);
 
-    $userData = $userDao->verifyToken(true);
+    $userData = $userDAO->verifyToken(true);
 
     $fullName = $user->getFullName($userData);
 
